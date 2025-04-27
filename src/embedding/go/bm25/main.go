@@ -20,6 +20,20 @@ const (
 var top = 3
 var skips = make(map[string]bool)
 
+func cleanText(text string) string {
+	words := strings.Fields(text) // Split text into words
+	var filteredWords []string
+
+	for _, word := range words {
+		if skips[strings.ToLower(word)] {
+			continue
+		}
+		filteredWords = append(filteredWords, word)
+	}
+
+	return strings.Join(filteredWords, " ")
+}
+
 // BM25 Index structure
 type BM25Index struct {
 	Corpus      []string
@@ -46,6 +60,7 @@ func BuildBM25Index(corpus []string) BM25Index {
 	totalLength := 0
 
 	for docID, doc := range corpus {
+		doc = cleanText(doc)
 		tokens := tokenize(doc)
 		docLengths[docID] = len(tokens)
 		totalLength += len(tokens)
@@ -96,6 +111,12 @@ type BM25Result struct {
 
 // Example usage
 func main() {
+	// "a", "is", "are", "and"
+	skips["a"] = true
+	skips["is"] = true
+	skips["are"] = true
+	skips["and"] = true
+
 	corpus := []string{
 		"Jacy is a software engineer.",
 		"Charlotte will become a lawyer in a few weeks after her official admission.",
@@ -115,7 +136,7 @@ func main() {
 			fmt.Println("Exiting...")
 			break
 		}
-
+		originalQuery = cleanText(originalQuery)
 		query := tokenize(originalQuery)
 
 		foundDocs := []string{}
@@ -123,7 +144,7 @@ func main() {
 
 		for docID := range index.Corpus {
 			score := BM25Score(query, docID, index)
-			// fmt.Printf("BM25 Score for Document %d: %.4f\n", docID, score)
+			fmt.Printf("BM25 Score for Document %d: %.4f\n", docID, score)
 			results = append(results, BM25Result{docID, corpus[docID], score})
 		}
 

@@ -1,0 +1,1 @@
+This is an API to call local Ollama 3.2 with a predefined prompt for RAG implementations.
