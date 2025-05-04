@@ -18,17 +18,29 @@ func BuildVectors(redisClient *redis.RedisClient, data []string) {
 		if err != nil {
 			fmt.Printf("Error storing vector %s \n", s)
 		}
-		redisClient.Set("docs:"+strconv.Itoa(counter), vector)
+		redisClient.Set(strconv.Itoa(counter), s, ConvertFloat64ToFloat32(vector))
 		counter++
 	}
 }
 
-func SearchVector(redisClient *redis.RedisClient, query string) {
+func ConvertFloat64ToFloat32(input []float64) []float32 {
+	// Create a slice with the same length as the input
+	output := make([]float32, len(input))
+
+	// Convert each float64 value to float32
+	for i, v := range input {
+		output[i] = float32(v)
+	}
+
+	return output
+}
+
+func SearchVector(redisClient *redis.RedisClient, query string) []string {
 	vector, err := ollama.Embed(query)
 	if err != nil {
 		fmt.Printf("Error searching vector %s \n", query)
 	}
-	redisClient.SearchVector(context.Background(), vector)
+	return redisClient.SearchVector(context.Background(), ConvertFloat64ToFloat32(vector))
 }
 
 // Example usage
@@ -54,16 +66,9 @@ func main() {
 			break
 		}
 
-		SearchVector(redisClient, originalQuery)
+		found := SearchVector(redisClient, originalQuery)
 
-		// sort.Slice(results, func(a int, b int) bool {
-		// 	return results[a].Score > results[b].Score
-		// })
-
-		// for i := 0; i < top; i++ {
-		// 	foundDocs = append(foundDocs, results[i].Text)
-		// }
-		// ollama.Chat(originalQuery, foundDocs)
+		ollama.Chat(originalQuery, found)
 		fmt.Println("")
 	}
 }

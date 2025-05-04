@@ -28,74 +28,101 @@ func NewRedisClient() *RedisClient {
 			DeleteDocs: true,
 		},
 	)
+	_, err := rdb.FTCreate(ctx,
+		"vector_idx",
+		&redis.FTCreateOptions{
+			OnHash: true,
+			Prefix: []any{"docs:"},
+		},
+		&redis.FieldSchema{
+			FieldName: "content",
+			FieldType: redis.SearchFieldTypeText,
+		},
+		&redis.FieldSchema{
+			FieldName: "embedding",
+			FieldType: redis.SearchFieldTypeVector,
+			VectorArgs: &redis.FTVectorArgs{
+				HNSWOptions: &redis.FTHNSWOptions{
+					Dim:            384,
+					DistanceMetric: "COSINE",
+					Type:           "FLOAT32",
+				},
+			},
+		},
+	).Result()
 
-	// _, err := rdb.FTCreate(ctx,
-	// 	"vector_idx",
-	// 	&redis.FTCreateOptions{
-	// 		OnHash: true,
-	// 		Prefix: []any{"doc:"},
-	// 	},
-	// 	&redis.FieldSchema{
-	// 		FieldName: "content",
-	// 		FieldType: redis.SearchFieldTypeText,
-	// 	},
-	// 	&redis.FieldSchema{
-	// 		FieldName: "genre",
-	// 		FieldType: redis.SearchFieldTypeTag,
-	// 	},
-	// 	&redis.FieldSchema{
-	// 		FieldName: "embedding",
-	// 		FieldType: redis.SearchFieldTypeVector,
-	// 		VectorArgs: &redis.FTVectorArgs{
-	// 			HNSWOptions: &redis.FTHNSWOptions{
-	// 				Dim:            384,
-	// 				DistanceMetric: "L2",
-	// 				Type:           "FLOAT32",
-	// 			},
-	// 		},
-	// 	},
-	// ).Result()
-
-	// if err != nil {
-	// 	panic(err)
-	// }
+	if err != nil {
+		panic(err)
+	}
 
 	return &RedisClient{
 		client: rdb,
 	}
 }
 
-func (rdb *RedisClient) Set(key string, embedding []float64) {
+func (rdb *RedisClient) Set(key string, content string, embedding []float32) {
 	ctx := context.Background()
 	// Convert embedding to byte array
 	byteEmbedding := floatsToBytes(embedding)
+	fmt.Println(content)
 
 	// Store in Redis
-	rdb.client.HSet(ctx, key, "doc_embedding", byteEmbedding)
+	_, err := rdb.client.HSet(
+		ctx,
+		fmt.Sprintf("docs:%v", key),
+		map[string]any{
+			"content":   content,
+			"embedding": byteEmbedding,
+		}).Result()
+
+	if err != nil {
+		fmt.Println("Error storing embedding:", err)
+		return
+	}
+
 	fmt.Println("Embedding stored successfully!")
 }
 
-func floatsToBytes(fs []float64) []byte {
-	buf := make([]byte, len(fs)*8)
+func floatsToBytes(fs []float32) []byte {
+	buf := make([]byte, len(fs)*4)
+
 	for i, f := range fs {
-		binary.LittleEndian.PutUint64(buf[i*4:], math.Float64bits(f))
+		u := math.Float32bits(f)
+		binary.NativeEndian.PutUint32(buf[i*4:], u)
 	}
+
 	return buf
 }
 
-func (rdb *RedisClient) SearchVector(ctx context.Context, queryVector []float64) {
+func (rdb *RedisClient) SearchVector(ctx context.Context, queryVector []float32) []string {
 	// Convert query vector to binary
 	queryBytes := floatsToBytes(queryVector)
-
+	// fmt.Println(queryBytes)
 	// Execute Redis search query
-	searchCmd := rdb.client.Do(ctx, "FT.SEARCH", "my_index", "(*)=>[KNN 3 @doc_embedding $query_vector]",
-		"PARAMS", "2", "query_vector", queryBytes, "DIALECT", "2")
+	results, err := rdb.client.FTSearchWithArgs(
+		ctx,
+		"vector_idx",
+		"*=>[KNN 5 @embedding $vec AS vector_distance]",
+		&redis.FTSearchOptions{
+			Return: []redis.FTSearchReturn{
+				{FieldName: "vector_distance"},
+				{FieldName: "content"},
+			},
+			DialectVersion: 2,
+			Params: map[string]any{
+				"vec": queryBytes,
+			},
+		}).Result()
 
-	// Process results
-	results, err := searchCmd.Result()
 	if err != nil {
 		fmt.Println("Error running search:", err)
-		return
+		return nil
 	}
-	fmt.Println("Search results:", results)
+
+	found := []string{}
+
+	for _, doc := range results.Docs {
+		found = append(found, doc.Fields["content"])
+	}
+	return found
 }

@@ -71,3 +71,56 @@ func Chat(query string, context []string) {
 		}
 	}
 }
+
+type EmbedResponseBody struct {
+	Model string      `json:"model"`
+	Data  [][]float64 `json:"embeddings"`
+}
+
+func Embed(query string) ([]float64, error) {
+	// Define the API endpoint and request payload
+	url := "http://localhost:11434/api/embed"
+	payload := map[string]any{
+		"model": "all-minilm:l6-v2",
+		"input": query,
+	}
+
+	// Convert payload to JSON
+	jsonData, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("Error marshaling payload:", err)
+		return nil, err
+	}
+
+	// Create an HTTP POST request
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	// Send the request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making request:", err)
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	// Read the response
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Error reading response:", err)
+		return nil, err
+	}
+
+	vector := &EmbedResponseBody{}
+	if err := json.Unmarshal(body, vector); err != nil {
+		fmt.Println(err)
+	}
+
+	// Print the response
+	return vector.Data[0], nil
+}

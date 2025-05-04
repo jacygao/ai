@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	"../llm/ollama"
+	"github.com/jacygao/ai/llm/ollama"
 )
 
 // BM25 parameters
