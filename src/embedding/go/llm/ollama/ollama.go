@@ -124,3 +124,11 @@ func Embed(query string) ([]float64, error) {
 	// Print the response
 	return vector.Data[0], nil
 }
+
+func Rerank() {
+	url := "http://localhost:11434/api/generate"
+	payload := map[string]any{
+		"model": "all-minilm:l6-v2",
+		"input": query,
+	}
+}
