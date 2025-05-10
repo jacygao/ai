@@ -6,6 +6,7 @@ variable "service_name" {
 variable "image" {
   description = "The container image to deploy."
   type        = string
+  default     = "gcr.io/electric-facet-306612/hello-world:latest"
 }
 
 variable "region" {
@@ -34,4 +35,9 @@ variable "allow_unauthenticated" {
   description = "Allow unauthenticated invocations of the Cloud Run service."
   type        = bool
   default     = true
+}
+
+variable "invoker_member" {
+  description = "The IAM member to grant the Cloud Run Invoker role."
+  type        = string
 }

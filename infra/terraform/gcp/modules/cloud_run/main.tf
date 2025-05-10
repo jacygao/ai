@@ -1,4 +1,4 @@
-resource "google_cloud_run_service" "default" {
+resource "google_cloud_run_service" "my_service" {
   name     = var.service_name
   location = var.region
 
@@ -19,13 +19,12 @@ resource "google_cloud_run_service" "default" {
 
   traffic {
     percent         = 100
-    revision_name   = google_cloud_run_service.default.latest_revision
     latest_revision = true
   }
 }
 
 resource "google_cloud_run_service_iam_member" "invoker" {
-  service = google_cloud_run_service.default.name
+  service = google_cloud_run_service.my_service.name
   location = var.region
   role    = "roles/run.invoker"
   member  = var.invoker_member

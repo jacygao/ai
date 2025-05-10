@@ -1,4 +1,4 @@
-resource "google_cloud_run_service" "default" {
+resource "google_cloud_run_service" "hello-world" {
   name     = var.service_name
   location = var.region
 
@@ -19,14 +19,22 @@ resource "google_cloud_run_service" "default" {
 
   traffic {
     percent         = 100
-    revision_name   = google_cloud_run_service.default.latest_revision
     latest_revision = true
   }
 }
 
 resource "google_cloud_run_service_iam_member" "invoker" {
-  service = google_cloud_run_service.default.name
-  location = google_cloud_run_service.default.location
+  service = google_cloud_run_service.hello-world.name
+  location = google_cloud_run_service.hello-world.location
   role    = "roles/run.invoker"
   member  = var.invoker_member
+}
+
+module "cloud_run" {
+  source       = "./modules/cloud_run"
+  service_name = var.service_name
+  image        = var.image
+  region       = var.region
+  project_id   = var.project_id
+  invoker_member = var.invoker_member
 }
