@@ -11,11 +11,11 @@ RUN go mod download
 # Copy the source code
 COPY . .
 
-# Build the Go application
-RUN go build -o hello .
+# Build the Go application as a statically linked binary
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o hello .
 
 # Use a minimal base image for the final container
-FROM gcr.io/distroless/base-debian11
+FROM gcr.io/distroless/static-debian11
 
 # Set the working directory
 WORKDIR /
