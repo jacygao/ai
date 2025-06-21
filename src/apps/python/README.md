@@ -20,32 +20,26 @@ A demonstration application showcasing the benefits of AI-powered vector search 
 - **Data**: JSON-based document storage
 
 ## Setup Instructions
-
-1. **Clone or navigate to the project directory**
-   ```bash
-   cd ai-search-demo
-   ```
-
-2. **Create a virtual environment**
+1. **Create a virtual environment**
    ```bash
    python -m venv venv
    ```
 
-3. **Activate the virtual environment**
+2. **Activate the virtual environment**
    - Windows: `venv\Scripts\activate`
    - macOS/Linux: `source venv/bin/activate`
 
-4. **Install dependencies**
+3. **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-5. **Run the application**
+4. **Run the application**
    ```bash
    python run.py
    ```
 
-6. **Open your browser**
+5. **Open your browser**
    Navigate to `http://localhost:8000`
 
 ## Usage
