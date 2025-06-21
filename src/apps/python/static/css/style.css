@@ -1,0 +1,202 @@
+/* Custom styles for AI Search Demo */
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header styling */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.display-4 {
+    font-weight: 600;
+}
+
+/* Search input styling */
+.input-group-text {
+    border: none;
+    background-color: #f8f9fa !important;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* Toggle switch styling */
+.form-check-input:checked {
+    background-color: #667eea;
+    border-color: #667eea;
+}
+
+.form-check-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* Card styling */
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+/* Search results styling */
+.list-group-item {
+    border: none;
+    border-bottom: 1px solid #e9ecef;
+    padding: 1.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+/* Result title */
+.result-title {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.result-title:hover {
+    color: #667eea;
+    text-decoration: none;
+}
+
+/* Result content */
+.result-content {
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+}
+
+/* Highlighted content */
+.result-content mark {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 0.1rem 0.2rem;
+    border-radius: 3px;
+}
+
+/* Tags */
+.result-tags {
+    margin-bottom: 0.5rem;
+}
+
+.result-tags .badge {
+    font-size: 0.75rem;
+    margin-right: 0.25rem;
+    background-color: #e9ecef;
+    color: #6c757d;
+}
+
+/* Score indicator */
+.score-badge {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Category badge */
+.category-badge {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Loading animation */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .input-group-lg > .form-control {
+        font-size: 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .list-group-item {
+        padding: 1rem;
+    }
+}
+
+/* Smooth transitions */
+.card, .list-group-item, .btn {
+    transition: all 0.2s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Focus states for accessibility */
+.btn:focus, .form-control:focus, .form-check-input:focus {
+    outline: none;
+}
+
+/* Animation for search results */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.list-group-item {
+    animation: fadeInUp 0.3s ease-out;
+}
+
+/* Status indicator */
+#search-status {
+    font-weight: 500;
+}
+
+.status-ready {
+    color: #28a745;
+}
+
+.status-loading {
+    color: #ffc107;
+}
+
+.status-error {
+    color: #dc3545;
+} 

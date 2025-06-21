@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "title": "Python Programming Fundamentals",
+    "content": "Python is a high-level, interpreted programming language known for its simplicity and readability. It supports multiple programming paradigms including procedural, object-oriented, and functional programming. Python's extensive standard library and third-party packages make it ideal for web development, data analysis, machine learning, and automation tasks.",
+    "category": "programming",
+    "tags": ["python", "programming", "language", "development"]
+  },
+  {
+    "id": 2,
+    "title": "Machine Learning Basics",
+    "content": "Machine learning is a subset of artificial intelligence that enables computers to learn and improve from experience without being explicitly programmed. It involves algorithms that can identify patterns in data and make predictions or decisions. Common applications include image recognition, natural language processing, and recommendation systems.",
+    "category": "ai",
+    "tags": ["machine learning", "artificial intelligence", "algorithms", "data science"]
+  },
+  {
+    "id": 3,
+    "title": "Web Development with JavaScript",
+    "content": "JavaScript is a versatile programming language primarily used for web development. It runs in browsers and enables interactive web pages, dynamic content, and client-side functionality. Modern JavaScript frameworks like React, Vue, and Angular have revolutionized frontend development by providing powerful tools for building complex user interfaces.",
+    "category": "programming",
+    "tags": ["javascript", "web development", "frontend", "programming"]
+  },
+  {
+    "id": 4,
+    "title": "Data Science and Analytics",
+    "content": "Data science combines statistics, programming, and domain expertise to extract meaningful insights from large datasets. It involves data collection, cleaning, analysis, and visualization. Popular tools include Python libraries like pandas, numpy, and matplotlib, as well as specialized platforms for big data processing.",
+    "category": "data",
+    "tags": ["data science", "analytics", "statistics", "python", "pandas"]
+  },
+  {
+    "id": 5,
+    "title": "Cloud Computing Services",
+    "content": "Cloud computing provides on-demand access to computing resources over the internet. Major providers like AWS, Azure, and Google Cloud offer services for storage, computing power, databases, and machine learning. Cloud platforms enable scalable, cost-effective solutions for businesses of all sizes.",
+    "category": "technology",
+    "tags": ["cloud computing", "aws", "azure", "google cloud", "infrastructure"]
+  },
+  {
+    "id": 6,
+    "title": "Natural Language Processing",
+    "content": "Natural Language Processing (NLP) is a branch of artificial intelligence that helps computers understand, interpret, and generate human language. Applications include chatbots, language translation, sentiment analysis, and text summarization. Modern NLP uses deep learning models like transformers to achieve remarkable accuracy.",
+    "category": "ai",
+    "tags": ["nlp", "natural language processing", "artificial intelligence", "deep learning"]
+  },
+  {
+    "id": 7,
+    "title": "Database Management Systems",
+    "content": "Database management systems (DBMS) are software systems designed to store, retrieve, and manage data efficiently. They include relational databases like MySQL and PostgreSQL, NoSQL databases like MongoDB, and specialized systems for different use cases. Proper database design is crucial for application performance and data integrity.",
+    "category": "technology",
+    "tags": ["database", "dbms", "mysql", "postgresql", "mongodb"]
+  },
+  {
+    "id": 8,
+    "title": "Cybersecurity Best Practices",
+    "content": "Cybersecurity involves protecting computer systems, networks, and data from digital attacks. Key practices include using strong passwords, enabling two-factor authentication, keeping software updated, and being cautious with email attachments. Organizations must implement comprehensive security policies and regular training programs.",
+    "category": "security",
+    "tags": ["cybersecurity", "security", "authentication", "passwords", "protection"]
+  },
+  {
+    "id": 9,
+    "title": "Mobile App Development",
+    "content": "Mobile app development creates applications for smartphones and tablets. Developers can choose between native development (iOS/Android), cross-platform frameworks like React Native or Flutter, or progressive web apps. The mobile market continues to grow, making app development a lucrative career path.",
+    "category": "programming",
+    "tags": ["mobile development", "ios", "android", "react native", "flutter"]
+  },
+  {
+    "id": 10,
+    "title": "Blockchain Technology",
+    "content": "Blockchain is a distributed ledger technology that enables secure, transparent, and tamper-proof record-keeping. Beyond cryptocurrencies like Bitcoin, blockchain has applications in supply chain management, voting systems, and digital identity verification. The technology is still evolving with new use cases emerging regularly.",
+    "category": "technology",
+    "tags": ["blockchain", "cryptocurrency", "bitcoin", "distributed ledger", "security"]
+  },
+  {
+    "id": 11,
+    "title": "DevOps and CI/CD",
+    "content": "DevOps combines software development and IT operations to shorten development cycles and improve software quality. Continuous Integration and Continuous Deployment (CI/CD) pipelines automate testing and deployment processes. Tools like Jenkins, GitLab CI, and GitHub Actions help teams deliver software faster and more reliably.",
+    "category": "technology",
+    "tags": ["devops", "ci/cd", "automation", "deployment", "jenkins"]
+  },
+  {
+    "id": 12,
+    "title": "Artificial Intelligence Ethics",
+    "content": "As AI systems become more prevalent, ethical considerations become increasingly important. Issues include bias in algorithms, privacy concerns, job displacement, and decision-making transparency. Organizations developing AI must consider these ethical implications and implement responsible AI practices.",
+    "category": "ai",
+    "tags": ["artificial intelligence", "ethics", "bias", "privacy", "responsible ai"]
+  }
+] 
